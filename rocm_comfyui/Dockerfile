@@ -1,9 +1,7 @@
-FROM "localhost/rocm_pytorch_base:latest" as base
+FROM "localhost/rocm_pytorch_base:latest"
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        git cmake cmake-curses-gui vim \
-        && \
+    apt-get install -y --no-install-recommends git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -19,15 +17,10 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-FROM base as final
-
-ARG VISION_WHL
-COPY $VISION_WHL /root
-
-RUN pip install $(basename $VISION_WHL)
-RUN rm $(basename $VISION_WHL)
-
-RUN USE_ROCM=1 pip install --no-build-isolation git+https://github.com/pytorch/audio.git@v2.7.0
+RUN python -m pip install \
+    --index-url https://rocm.nightlies.amd.com/v2/gfx1151/ \
+    torchvision==0.22.1+rocm7.0.0rc20250826 \
+    torchaudio==2.7.1a0+rocm7.0.0rc20250826
 
 WORKDIR /root
 # (the lastest known working version of ComfyUI is v0.3.57)

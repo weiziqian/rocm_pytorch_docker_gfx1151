@@ -21,9 +21,12 @@ RUN wget -q https://github.com/oneapi-src/oneDNN/archive/refs/tags/v${ONEDNN_VER
     rm -r oneDNN-*
 
 # install pytorch audio
-RUN USE_ROCM=1 pip install --no-build-isolation git+https://github.com/pytorch/audio.git@v2.7.0
+RUN python -m pip install \
+    --index-url https://rocm.nightlies.amd.com/v2/gfx1151/ \
+    torchaudio==2.7.1a0+rocm7.0.0rc20250826
 
 #build and install ROCm CTranslate2 from source
+ENV ROCM_PATH=/opt/rocm
 ENV CTRANSLATE2_ROOT=/opt/ctranslate2
 ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CTRANSLATE2_ROOT/lib
 
@@ -46,6 +49,13 @@ RUN cd /root/CTranslate2/python \
      && pip install .
 
 # faster-whisper
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends pkg-config \
+    libavformat-dev libavcodec-dev libavdevice-dev \
+    libavutil-dev libavfilter-dev libswscale-dev libswresample-dev && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /root
 RUN git clone https://github.com/SYSTRAN/faster-whisper.git \
     && cd faster-whisper \

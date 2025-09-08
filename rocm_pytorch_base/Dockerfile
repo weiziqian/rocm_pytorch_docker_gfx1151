@@ -23,10 +23,10 @@ RUN python3.11 -m venv /root/venv
 ENV PATH="/root/venv/bin:$PATH"
 RUN pip install --upgrade pip setuptools wheel
 
-# ref: https://github.com/scottt/rocm-TheRock/releases/v6.5.0rc-pytorch
-RUN pip install "https://github.com/scottt/rocm-TheRock/releases/download/v6.5.0rc-pytorch/torch-2.7.0a0+gitbfd8155-cp311-cp311-linux_x86_64.whl"
-
-RUN pip install "numpy<2.0"
+RUN python -m pip install \
+    --index-url https://rocm.nightlies.amd.com/v2/gfx1151/ \
+    torch==2.7.1+rocm7.0.0rc20250826 \
+    numpy
 
 WORKDIR /root
 CMD ["/bin/bash"]

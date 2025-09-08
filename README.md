@@ -8,8 +8,10 @@ This repository provides Docker files to build ROCm-enabled PyTorch environments
 
 Includes:
 
-- Ubuntu 24.04 with ROCm 6.5.3 (base image from [ROCm dev-ubuntu-24.04](https://hub.docker.com/r/rocm/dev-ubuntu-24.04))
-- torch 2.7.0 built on ROCm 6.5.0rc and Python 3.11 (thanks to [scottt/rocm-TheRock](https://github.com/scottt/rocm-TheRock/releases/v6.5.0rc-pytorch))
+- Ubuntu 24.04 with ROCm 6.5.3 driver (base image from [ROCm dev-ubuntu-24.04](https://hub.docker.com/r/rocm/dev-ubuntu-24.04))
+- Python 3.11
+- ROCm 7.0.0rc
+- Pytorch 2.7.1
 
 ### Usage
 
@@ -38,7 +40,7 @@ podman run -it --rm \
 
 ```
 True
-6.5.25190-39c57805b
+7.0.51830-3c1613485
 gfx1151
 ```
 </details>
@@ -47,8 +49,8 @@ gfx1151
 
 Includes:
 - (Based on the above base image)
-- torchaudio v2.7.0
-- torchvision v0.22.0
+- torchaudio v2.7.1
+- torchvision v0.22.1
 
 ### Usage
 
@@ -82,7 +84,7 @@ Includes:
 - (Based on the above base image)
 - oneDNN v3.1.1
 - CTranslate2 v3.23.0
-- torchaudio v2.7.0
+- torchaudio v2.7.1
 - faster-whisper v0.10.0
 
 ### Usage
