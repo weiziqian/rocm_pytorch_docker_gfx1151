@@ -1,6 +1,5 @@
-ARG BASE_IMAGE="localhost/rocm_pytorch_base:latest"
+FROM "localhost/rocm_pytorch_base:latest"
 
-FROM $BASE_IMAGE
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         git  cmake cmake-curses-gui ffmpeg libopenblas-dev vim \
